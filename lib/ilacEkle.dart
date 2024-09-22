@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 class IlacEkle extends StatelessWidget {
   TextEditingController _controller = TextEditingController();
@@ -42,7 +44,9 @@ class IlacEkle extends StatelessWidget {
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    pencereAc(context);
+                  },
                   child: Text("+Ekle"),
                 ),
               ],
@@ -128,4 +132,34 @@ Row buildZamanTextFieldRow() {
       // TextFormField(),
     ],
   );
+}
+
+void pencereAc(BuildContext context){
+  showDialog(context: context, builder: (context){
+    return AlertDialog(
+      title: const Text('AlertDialog Title'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            TimePickerSpinnerPopUp(
+              mode: CupertinoDatePickerMode.time,
+              initTime: DateTime.now(),
+              onChange: (dateTime) {
+                // Implement your logic with select dateTime
+              },
+            ),
+
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Ekle'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  });
 }
