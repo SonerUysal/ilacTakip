@@ -1,9 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
+import 'package:numberpicker/numberpicker.dart';
 
-class IlacEkle extends StatelessWidget {
+class IlacEkle extends StatefulWidget {
+  @override
+  State<IlacEkle> createState() => _IlacEkleState();
+}
+
+class _IlacEkleState extends State<IlacEkle> {
   TextEditingController _controller = TextEditingController();
+  String ilacCesidi = "hap"; //varsayılan ilaç alma çeşidi
+  List<String> ilacCesitleri = [
+    //ilaç alma türleri listesi
+    "hap",
+    "parça",
+    "ml",
+    "mg",
+    "kapak"
+  ]; //ilaç alma çeşitleri
+  double _currentDoubleValue = 1.0; //varsayılan ilaç alma dozu
+  DateTime ilacZaman = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +62,16 @@ class IlacEkle extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    pencereAc(context);
+                    _ilacEkle(context);
                   },
                   child: Text("+Ekle"),
                 ),
               ],
             ),
-          Divider( height: 10,color:Colors.black ,)
+            Divider(
+              height: 10,
+              color: Colors.black,
+            )
 
             /*
             buildZamanLabelRow(),
@@ -95,71 +115,116 @@ class IlacEkle extends StatelessWidget {
       ],
     );
   }
-}
 
-Row buildZamanTextFieldRow() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Container(
-        height: 100,
-        width: 150,
-        child: TextFormField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+  Row buildZamanTextFieldRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 100,
+          width: 150,
+          child: TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
         ),
-      ),
-      Container(
-        height: 100,
-        width: 150,
-        child: TextFormField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+        Container(
+          height: 100,
+          width: 150,
+          child: TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
         ),
-      ),
 
-      IconButton(
-        onPressed: () {},
-        icon: Icon(Icons.delete),
-      ),
-      // TextFormField(),
-    ],
-  );
-}
-
-void pencereAc(BuildContext context){
-  showDialog(context: context, builder: (context){
-    return AlertDialog(
-      title: const Text('AlertDialog Title'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            TimePickerSpinnerPopUp(
-              mode: CupertinoDatePickerMode.time,
-              initTime: DateTime.now(),
-              onChange: (dateTime) {
-                // Implement your logic with select dateTime
-              },
-            ),
-
-          ],
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.delete),
         ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          child: const Text('Ekle'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        // TextFormField(),
       ],
     );
-  });
+  }
+
+  void _ilacEkle(BuildContext context) async {
+    String? eklenenIlac=await pencereAc(context);
+    print(eklenenIlac);
+  }
+
+  Future<String?> pencereAc(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) =>
+          StatefulBuilder(
+
+              builder: (BuildContext context, StateSetter setState) {
+
+                return AlertDialog(
+                  title: const Text('İlaç Ekle'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        TimePickerSpinnerPopUp(
+                          mode: CupertinoDatePickerMode.time,
+                          initTime: ilacZaman,
+                          onChange: (secilenZaman) {
+                            setState(() {
+                              ilacZaman = secilenZaman;
+                              print(ilacZaman);
+                            });
+                            // Implement your logic with select dateTime
+                          },
+                        ),
+                        Row(
+                          children: [
+                            DecimalNumberPicker(
+                              value: _currentDoubleValue,
+                              itemWidth: 50,
+                              minValue: 0,
+                              maxValue: 1000,
+                              decimalPlaces: 2,
+                              onChanged: (value) =>
+                                  setState(() => _currentDoubleValue = value),
+                            ),
+                            DropdownButton(
+                                items: ilacCesitleri
+                                    .map(
+                                      (String oankiIlacCesidi) =>
+                                      DropdownMenuItem(
+                                          child: Text(oankiIlacCesidi),
+                                          value: oankiIlacCesidi),
+                                )
+                                    .toList(),
+                                value: ilacCesidi,
+                                onChanged: (String? secilen) {
+                                  setState(() {
+                                    ilacCesidi = secilen!;
+                                  });
+                                }),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Ekle'),
+                      onPressed: () {
+                        Navigator.of(context).pop(ilacCesidi);
+
+                      },
+                    ),
+                  ],
+                );
+              }
+          ),
+    );
+  }
 }
