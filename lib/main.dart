@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:ilac_takip/ilacEkle.dart';
+import 'package:ilac_takip/yerel_veri_tabani.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -43,8 +44,11 @@ class MyApp extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
+             /*   Navigator.push(context,
                     MaterialPageRoute(builder: (context) => IlacEkle()));
+                */
+
+
               },
               child: Text("İlaç Ekle +"),
             ),
