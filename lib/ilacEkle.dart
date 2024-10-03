@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ilac_takip/model/ilac.dart';
+import 'package:ilac_takip/yerel_veri_tabani.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -9,6 +11,8 @@ class IlacEkle extends StatefulWidget {
 }
 
 class _IlacEkleState extends State<IlacEkle> {
+YerelVeriTabani _yerelVeriTabani=YerelVeriTabani();
+
   TextEditingController _controller = TextEditingController();
   String ilacCesidi = "hap"; //varsayılan ilaç alma çeşidi
   List<String> ilacCesitleri = [
@@ -155,7 +159,12 @@ class _IlacEkleState extends State<IlacEkle> {
 
   void _ilacEkle(BuildContext context) async {
     String? eklenenIlac=await pencereAc(context);
-    print(eklenenIlac);
+    if( eklenenIlac !=null){
+      Ilac yeniIlac=Ilac(eklenenIlac);
+      int ilacIdsi= await _yerelVeriTabani.createIlac(yeniIlac);
+      print("eklenenIlacidsi: $ilacIdsi");
+    }
+
   }
 
   Future<String?> pencereAc(BuildContext context) {

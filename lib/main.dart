@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-             /*   Navigator.push(context,
+               Navigator.push(context,
                     MaterialPageRoute(builder: (context) => IlacEkle()));
-                */
+
 
 
               },

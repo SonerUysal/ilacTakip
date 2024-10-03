@@ -1,3 +1,4 @@
+import 'package:ilac_takip/model/ilac.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -34,6 +35,15 @@ class YerelVeriTabani{
                     $_ilacAdi	TEXT NOT NULL
                   ); 
     """);
+  }
+
+  Future<int> createIlac(Ilac ilac) async{
+    Database? db=await _veriTabaniniGetir();
+    if(db != null){
+     return await db.insert(_ilaclarTabloAdi, ilac.toMap());
+    }else {
+      return -1;
+    }
   }
 
 }

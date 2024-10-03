@@ -1,6 +1,12 @@
-class ilac{
+class Ilac{
   int? id;
   String ilacAdi;
 
-  ilac(this.id, this.ilacAdi);
+  Ilac( this.ilacAdi);
+  Map<String,dynamic> toMap(){
+    return {
+      "id": id,
+      "ilacAdi":ilacAdi,
+    };
+  }
 }
