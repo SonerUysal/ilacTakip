@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
+import 'package:ilac_takip/denemeler.dart';
+import 'package:ilac_takip/denemeler_database_ekle.dart';
 import 'package:ilac_takip/ilacEkle.dart';
 
 
@@ -52,6 +54,21 @@ class MyApp extends StatelessWidget {
               },
               child: Text("İlaç Ekle +"),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Denemeler()));
+              },
+              child: Text("denemelerSayfasi"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DenemelerDatabaseEkle()));
+              },
+              child: Text("denemelerDatabase"),
+            ),
+
           ],
         ),
       ),

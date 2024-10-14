@@ -46,4 +46,17 @@ class YerelVeriTabani{
     }
   }
 
-}
+  Future<List<Ilac>> readTumIlaclar(Ilac ilac) async{
+    Database? db=await _veriTabaniniGetir();
+    List<Ilac> ilaclar=[];
+
+    if(db != null){
+      List<Map<String,dynamic>> ilaclarMap= await db.query(_ilaclarTabloAdi);
+      for(Map<String, dynamic> m in ilaclarMap){
+        Ilac i=Ilac.fromMap(m);
+        ilaclar.add(i);
+      }
+    } return ilaclar;
+    }
+  }
+

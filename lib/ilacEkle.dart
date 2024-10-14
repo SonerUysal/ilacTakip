@@ -70,6 +70,7 @@ YerelVeriTabani _yerelVeriTabani=YerelVeriTabani();
                   },
                   child: Text("+Ekle"),
                 ),
+
               ],
             ),
             Divider(
