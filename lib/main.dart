@@ -3,6 +3,7 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:ilac_takip/denemeler.dart';
 import 'package:ilac_takip/denemeler_database_ekle.dart';
 import 'package:ilac_takip/ilacEkle.dart';
+import 'package:ilac_takip/users/kitaplar.dart';
 
 
 void main() => runApp(MaterialApp(
@@ -44,29 +45,46 @@ class MyApp extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            ElevatedButton(
-              onPressed: () {
-               Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => IlacEkle()));
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                   Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => IlacEkle()));
+                  },
+                  child: Text("İlaç Ekle +"),
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Denemeler()));
+                  },
+                  child: Text("denemelerSayfasi"),
+                ),
 
 
+              ],
 
-              },
-              child: Text("İlaç Ekle +"),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Denemeler()));
-              },
-              child: Text("denemelerSayfasi"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DenemelerDatabaseEkle()));
-              },
-              child: Text("denemelerDatabase"),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => DenemelerDatabaseEkle()));
+                  },
+                  child: Text("denemelerDatabase"),
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Kitaplar()));
+                  },
+                  child: Text("Kitaplar"),
+                ),
+              ],
             ),
 
           ],
