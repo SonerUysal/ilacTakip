@@ -36,6 +36,7 @@ class _KitaplarState extends State<Kitaplar> {
       _kitapBasimYiliController.clear();
       _kitapSayfaSayisiController.clear();
     }
+    loadKitap();
   }
 
   void loadKitap() async {
@@ -48,6 +49,8 @@ class _KitaplarState extends State<Kitaplar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      // ekran klavyesi açılınca ekran taşma sorunu için
       appBar: AppBar(
         title: Text("Kitap Kayıt Sayfası"),
       ),
@@ -92,16 +95,22 @@ class _KitaplarState extends State<Kitaplar> {
               height: 10,
             ),
             ElevatedButton(onPressed: _kitapEkle, child: Text("Liste Ekle")),
-            ElevatedButton(onPressed: loadKitap, child: Text("Kitapları Getir")),
+            ElevatedButton(
+                onPressed: loadKitap, child: Text("Kitapları Getir")),
             Expanded(
               child: ListView.builder(
                   itemCount: _kitaplarList.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Text(
-                          _kitaplarList[index].kitapSayfaSayisi.toString()),
-                      title: Text(_kitaplarList[index].kitapAdi),
-                      subtitle: Text(_kitaplarList[index].kitapYazari),
+                    return Card(
+                      child: ListTile(
+                        leading: Text(
+                            _kitaplarList[index].kitapSayfaSayisi.toString()),
+                        title: Text(_kitaplarList[index].kitapAdi),
+                        subtitle: Text(_kitaplarList[index].kitapYazari),
+                        onTap: () {
+                          print(_kitaplarList[index].kitapAdi);
+                        },
+                      ),
                     );
                   }),
             ),
