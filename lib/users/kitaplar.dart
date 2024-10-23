@@ -92,6 +92,7 @@ class _KitaplarState extends State<Kitaplar> {
               height: 10,
             ),
             ElevatedButton(onPressed: _kitapEkle, child: Text("Liste Ekle")),
+            ElevatedButton(onPressed: loadKitap, child: Text("Kitapları Getir")),
             Expanded(
               child: ListView.builder(
                   itemCount: _kitaplarList.length,
